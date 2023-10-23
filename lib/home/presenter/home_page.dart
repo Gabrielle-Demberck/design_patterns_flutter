@@ -1,9 +1,9 @@
-import 'package:design_patterns_flutter/home/components/card_widget.dart';
+import 'package:design_patterns_flutter/home/presenter/components/card_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../components/expanded_card_widget.dart';
-import '../components/expanded_surface_widget.dart';
-import '../components/modal/modal_widget.dart';
+import 'components/expanded_card_widget.dart';
+import 'components/expanded_surface_widget.dart';
+import 'components/modal/modal_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,13 +39,13 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          toolbarHeight: 80,
+          toolbarHeight: 100,
           title: Text(
             'Design Patterns',
-            style: Theme.of(context)
-                .textTheme
-                .headlineLarge!
-                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
         body: ListView(

@@ -22,6 +22,7 @@ class _ExpandedCardWidgetState extends State<ExpandedCardWidget> {
       child: Container(
         color: Colors.black26,
         child: ExpansionTile(
+            collapsedIconColor: Colors.white,
             leading: Icon(widget.leadingIcon),
             backgroundColor: Colors.black,
             title: Text(
@@ -30,6 +31,7 @@ class _ExpandedCardWidgetState extends State<ExpandedCardWidget> {
                   .textTheme
                   .titleMedium!
                   .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             children: widget.children),
       ),

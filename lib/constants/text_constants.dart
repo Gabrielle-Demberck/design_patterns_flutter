@@ -1,0 +1,4 @@
+abstract class AppTexts {
+  static const designPatternDescription =
+      'O termo "Design Pattern" refere-se a soluções recorrentes e generalizadas para problemas comuns encontrados no design de software. É uma abordagem que oferece uma maneira estruturada de resolver problemas específicos na programação, baseada na experiência coletiva de desenvolvedores ao longo do tempo. Eles representam as melhores práticas utilizadas por desenvolvedores que enfrentaram problemas similares anteriormente e encontraram soluções eficazes. \n O conceito de padrões de design foi popularizado por Erich Gamma, Richard Helm, Ralph Johnson e John Vlissides, que escreveram o livro  "Design Patterns - Elements of Reusable Object-Oriented Software" (Gang of Four) em 1994.\n  Os padrões de design são uma ferramenta valiosa para desenvolvedores de software, a  aplicação inteligente desses padrões contribui para a criação de software robusto, flexível e fácil de manter.';
+}
