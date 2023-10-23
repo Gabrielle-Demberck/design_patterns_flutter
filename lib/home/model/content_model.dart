@@ -1,0 +1,3 @@
+class ContentModel {
+  //TODO ADAPTER
+}

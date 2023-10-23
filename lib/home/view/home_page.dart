@@ -1,6 +1,7 @@
-import 'package:design_patterns_flutter/home/presenter/components/card_widget.dart';
+import 'package:design_patterns_flutter/home/view/components/card_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../controller/home_controller.dart';
 import 'components/expanded_card_widget.dart';
 import 'components/expanded_surface_widget.dart';
 import 'components/modal/modal_widget.dart';
@@ -13,6 +14,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final homeController = HomeController();
+
+  @override
+  void initState() {
+    super.initState();
+    homeController.getContents();
+  }
+
   void ShowModal() {
     showModalBottomSheet(
       isScrollControlled: true,
