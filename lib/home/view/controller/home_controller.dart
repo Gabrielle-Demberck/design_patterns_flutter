@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../model/content_model.dart';
+import '../../domain/model/content_model.dart';
 
 class HomeController {
   final dio = Dio();

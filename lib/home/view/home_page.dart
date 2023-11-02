@@ -1,7 +1,7 @@
 import 'package:design_patterns_flutter/home/view/components/card_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../controller/home_controller.dart';
+import 'controller/home_controller.dart';
 import 'components/expanded_card_widget.dart';
 import 'components/expanded_surface_widget.dart';
 import 'components/modal/modal_widget.dart';
@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    homeController.getContents();
   }
 
   void ShowModal() {
