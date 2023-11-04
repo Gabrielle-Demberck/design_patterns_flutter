@@ -1,18 +1,33 @@
 import 'package:design_patterns_flutter/home/external/datasource/contents_datasourse.dart';
 import 'package:design_patterns_flutter/home/infra/adapter/contents_adapter.dart';
-import 'package:design_patterns_flutter/home/domain/model/content_model.dart';
+import 'package:design_patterns_flutter/home/domain/model/element_content_model.dart';
+
+import '../../domain/model/element_model.dart';
+import '../adapter/element_adapter.dart';
 
 abstract class IContentsRepository {
-  Future<List<ContentModel>> getContents();
+  Future<List<ElementContentModel>> getContents();
+  Future<ElementModel> getHomeContent();
 }
 
 class ContentsRepository implements IContentsRepository {
-  final dataSource = ContentsDatasource();
+  final IContentsDatasource dataSource;
+  ContentsRepository({required this.dataSource});
   @override
-  Future<List<ContentModel>> getContents() async {
+  Future<List<ElementContentModel>> getContents() async {
     try {
       final result = await dataSource.getAllContents();
-      return ContentsAdapter.fromMap(result);
+      return ElementContentsAdapter.fromMap(result);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<ElementModel> getHomeContent() async {
+    try {
+      final result = await dataSource.getHomeContent();
+      return ElementAdapter.fromMap(result);
     } catch (e) {
       throw Exception(e.toString());
     }

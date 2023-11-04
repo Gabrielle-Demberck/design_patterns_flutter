@@ -1,29 +1,43 @@
-import 'package:dio/dio.dart';
-import '../../domain/model/content_model.dart';
+import 'package:design_patterns_flutter/home/domain/model/element_model.dart';
+import 'package:flutter/material.dart';
+
+import '../../domain/model/element_content_model.dart';
+import '../../external/datasource/contents_datasourse.dart';
+import '../../infra/repository/contents_repository.dart';
 
 class HomeController {
-  final dio = Dio();
-  final contents = [];
+  // observáveis
+  final elementContents = ValueNotifier(<ElementContentModel>[]);
+  final elementModel = ValueNotifier(ElementModel.empty());
 
-  Future<List<ContentModel>> getContents() async {
-    try {
-      final result = await dio.get(
-          'https://sheet.best/api/sheets/34e889f0-ab5e-4236-abde-da5ec6610596/tabs/all_categories');
-      print(result);
-    } catch (e) {}
-    throw UnimplementedError();
+  // Instância única da classe
+  static HomeController? _controllerInstance;
+  // Construtor nomeado privado
+  HomeController._internal();
 
-    //TODO ADAPTER
+// Método de factory para obter a instância única
+  factory HomeController() {
+    return _controllerInstance ??= HomeController._internal();
   }
 
-  Future<List<ContentModel>> getElement() async {
+  // Métodos 
+  Future<void> getContents() async {
+    final IContentsRepository contentsRepository =
+        ContentsRepository(dataSource: ContentsDatasource());
     try {
-      final result = await dio.get(
-          'https://sheet.best/api/sheets/34e889f0-ab5e-4236-abde-da5ec6610596/tabs/tabs/introduction_elements');
-      print(result);
-    } catch (e) {}
-    // TODO: implement getContents
-    throw UnimplementedError();
-    //TODO ADAPTER
+      elementContents.value = await contentsRepository.getContents();
+    } catch (e) {
+      throw UnimplementedError();
+    }
+  }
+
+  Future<void> getHomeElement() async {
+    final IContentsRepository contentsRepository =
+        ContentsRepository(dataSource: ContentsDatasource());
+    try {
+      elementModel.value = await contentsRepository.getHomeContent();
+    } catch (e) {
+      throw UnimplementedError();
+    }
   }
 }
