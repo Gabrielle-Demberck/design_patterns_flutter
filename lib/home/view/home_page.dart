@@ -1,6 +1,6 @@
 import 'package:design_patterns_flutter/home/view/components/card_widget.dart';
+import 'package:design_patterns_flutter/home/view/controller/home_state.dart';
 import 'package:flutter/material.dart';
-
 import 'controller/home_controller.dart';
 import 'components/expanded_card_widget.dart';
 import 'components/expanded_surface_widget.dart';
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     homeController.getHomeElement();
   }
 
-  void ShowModal() {
+  void showModal() {
     showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.black,
@@ -57,59 +57,56 @@ class _HomePageState extends State<HomePage> {
                 ),
           ),
         ),
-        body: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            children: [
-              const ExpandedSurfaceWidget(),
-              ExpandedCardWidget(
-                leadingIcon: Icons.important_devices_sharp,
-                title: 'Creational',
-                children: [
-                  CardWidget(
-                    onTap: ShowModal,
-                    title: 'Creational',
-                    icon: Icons.important_devices_sharp,
-                  ),
-                  CardWidget(
-                    onTap: ShowModal,
-                    title: 'Creational',
-                    icon: Icons.important_devices_sharp,
-                  ),
-                ],
-              ),
-              ExpandedCardWidget(
-                leadingIcon: Icons.important_devices_sharp,
-                title: 'Structural',
-                children: [
-                  CardWidget(
-                      onTap: ShowModal,
-                      title: 'Structural',
-                      icon: Icons.settings_input_composite_rounded),
-                  CardWidget(
-                      onTap: ShowModal,
-                      title: 'Structural',
-                      icon: Icons.settings_input_composite_rounded),
-                  CardWidget(
-                      onTap: () {},
-                      title: 'Structural',
-                      icon: Icons.settings_input_composite_rounded),
-                ],
-              ),
-              ExpandedCardWidget(
-                leadingIcon: Icons.important_devices_sharp,
-                title: 'Behavioral',
-                children: [
-                  CardWidget(
-                      onTap: () {},
-                      title: 'Behavioral',
-                      icon: Icons.all_inbox_rounded),
-                  CardWidget(
-                      onTap: () {},
-                      title: 'Behavioral',
-                      icon: Icons.all_inbox_rounded),
-                ],
-              ),
-            ]),
+        body: ValueListenableBuilder<HomeState>(
+          valueListenable: homeController,
+          builder: (context, state, _) {
+            if (state is HomeSuccessState) {
+              return ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  children: [
+                    ExpandedSurfaceWidget(
+                      text: state.homeValues!.description,
+                    ),
+                    ExpandedCardWidget(
+                      leadingIcon: Icons.important_devices_sharp,
+                      title: state.homeValues!.contents[0],
+                      children: CardWidget(
+                        onTap: showModal,
+                        title: 'Creational',
+                        icon: Icons.important_devices_sharp,
+                      ),
+                    ),
+                    ExpandedCardWidget(
+                        leadingIcon: Icons.important_devices_sharp,
+                        title: state.homeValues!.contents[1],
+                        children: ListView.builder(
+                            itemCount: 50,
+                            itemBuilder: (context, item) {
+                              return CardWidget(
+                                  onTap: showModal,
+                                  title: 'Structural',
+                                  icon: Icons.settings_input_composite_rounded);
+                            })),
+                    ExpandedCardWidget(
+                      leadingIcon: Icons.important_devices_sharp,
+                      title: state.homeValues!.contents[2],
+                      children: CardWidget(
+                          onTap: () {},
+                          title: 'Behavioral',
+                          icon: Icons.all_inbox_rounded),
+                    ),
+                  ]);
+            }
+            if (state is HomeErrorState) {
+              return Center(
+                  child: Text(
+                state.errorMessage,
+                style: const TextStyle(color: Colors.white),
+              ));
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }

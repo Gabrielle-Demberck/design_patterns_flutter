@@ -1,11 +1,15 @@
-import 'package:design_patterns_flutter/home/domain/model/element_model.dart';
+import '../../domain/model/home_model.dart';
 
-class ElementAdapter {
-  static ElementModel fromMap(Map<String, dynamic> json) {
-    return ElementModel(
-      name: json['name'],
+class HomeAdapter {
+  static HomeModel fromMap(Map<String, dynamic> json) {
+    return HomeModel(
+      title: json['title'],
       description: json['description'],
-      contents: json['example'],
+      contents: <String>[
+        json['group_types_1'],
+        json['group_types_2'],
+        json['group_types_3']
+      ],
     );
   }
 }

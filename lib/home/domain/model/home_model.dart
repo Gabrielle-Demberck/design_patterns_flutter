@@ -1,19 +1,22 @@
-class ElementModel {
-  final String name;
+class HomeModel {
+  final String title;
   final String description;
   final List<String> contents;
 
-  ElementModel({
-    required this.name,
+  HomeModel({
+    required this.title,
     required this.description,
     required this.contents,
   });
 
-  factory ElementModel.empty() {
-    return ElementModel(
+  factory HomeModel.empty() {
+    return HomeModel(
       contents: [],
-      name: '',
+      title: '',
       description: '',
     );
   }
 }
+
+
+

@@ -1,42 +1,43 @@
-import 'package:design_patterns_flutter/home/domain/model/element_model.dart';
+import 'package:design_patterns_flutter/home/view/controller/home_state.dart';
 import 'package:flutter/material.dart';
-
-import '../../domain/model/element_content_model.dart';
 import '../../external/datasource/contents_datasourse.dart';
 import '../../infra/repository/contents_repository.dart';
 
-class HomeController {
-  // observáveis
-  final elementContents = ValueNotifier(<ElementContentModel>[]);
-  final elementModel = ValueNotifier(ElementModel.empty());
+class HomeController extends ValueNotifier<HomeState> {
+  final IContentsRepository contentsRepository =
+      ContentsRepository(dataSource: ContentsDatasource());
 
-  // Instância única da classe
+  // Observables
+
+  // Unique class instance
   static HomeController? _controllerInstance;
-  // Construtor nomeado privado
-  HomeController._internal();
 
-// Método de factory para obter a instância única
+  // Private named constructor
+  HomeController._internal() : super(HomeLoadingState());
+
+  // Factory Method to get unique
   factory HomeController() {
     return _controllerInstance ??= HomeController._internal();
   }
 
-  // Métodos 
-  Future<void> getContents() async {
-    final IContentsRepository contentsRepository =
-        ContentsRepository(dataSource: ContentsDatasource());
+// Methods
+  Future<void> getHomeElement() async {
+    value = HomeLoadingState();
     try {
-      elementContents.value = await contentsRepository.getContents();
+      final result = await contentsRepository.getHomeContent();
+      value = HomeSuccessState(homeValues: result);
     } catch (e) {
-      throw UnimplementedError();
+      value = HomeErrorState(errorMessage: e.toString());
     }
   }
 
-  Future<void> getHomeElement() async {
-    final IContentsRepository contentsRepository =
-        ContentsRepository(dataSource: ContentsDatasource());
+  Future<void> getContents() async {
+    value = HomeLoadingState();
     try {
-      elementModel.value = await contentsRepository.getHomeContent();
+      final result = await contentsRepository.getContents();
+      value = HomeSuccessState(elementContentValues: result);
     } catch (e) {
+      value = HomeErrorState(errorMessage: e.toString());
       throw UnimplementedError();
     }
   }

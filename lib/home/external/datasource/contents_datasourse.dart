@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 abstract class IContentsDatasource {
   Future<List<Map<String, dynamic>>> getAllContents();
-  Future<Map<String, dynamic>> getHomeContent();
+  Future<List<dynamic>> getHomeContent();
 }
 
 class ContentsDatasource implements IContentsDatasource {
@@ -20,7 +20,7 @@ class ContentsDatasource implements IContentsDatasource {
   }
 
   @override
-  Future<Map<String, dynamic>> getHomeContent() async {
+  Future<List<dynamic>> getHomeContent() async {
     try {
       final result = await dio.get(
           'https://sheet.best/api/sheets/34e889f0-ab5e-4236-abde-da5ec6610596/tabs/introduction_elements');

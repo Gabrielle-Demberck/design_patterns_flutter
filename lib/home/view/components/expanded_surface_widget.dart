@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/text_constants.dart';
-
 class ExpandedSurfaceWidget extends StatefulWidget {
-  const ExpandedSurfaceWidget({super.key});
+  final String text;
+  const ExpandedSurfaceWidget({super.key, required this.text});
 
   @override
   State<ExpandedSurfaceWidget> createState() => _ExpandedSurfaceWidgetState();
@@ -25,11 +24,12 @@ class _ExpandedSurfaceWidgetState extends State<ExpandedSurfaceWidget> {
       child: ListView(
         children: [
           Text(
-            AppTexts.designPatternDescription,
+            widget.text,
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!
                 .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.justify,
             maxLines: maxLines,
             overflow: TextOverflow.clip,
           ),

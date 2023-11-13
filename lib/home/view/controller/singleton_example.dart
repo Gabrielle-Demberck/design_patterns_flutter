@@ -24,5 +24,5 @@ class EventLogger {
   // Método para log de eventos
   void logEvent(String event) { 
     print('Evento registrado: $event');
-  } 
+  }
 }

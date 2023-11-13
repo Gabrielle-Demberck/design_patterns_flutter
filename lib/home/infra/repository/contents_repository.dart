@@ -2,12 +2,12 @@ import 'package:design_patterns_flutter/home/external/datasource/contents_dataso
 import 'package:design_patterns_flutter/home/infra/adapter/contents_adapter.dart';
 import 'package:design_patterns_flutter/home/domain/model/element_content_model.dart';
 
-import '../../domain/model/element_model.dart';
+import '../../domain/model/home_model.dart';
 import '../adapter/element_adapter.dart';
 
 abstract class IContentsRepository {
   Future<List<ElementContentModel>> getContents();
-  Future<ElementModel> getHomeContent();
+  Future<HomeModel> getHomeContent();
 }
 
 class ContentsRepository implements IContentsRepository {
@@ -24,10 +24,10 @@ class ContentsRepository implements IContentsRepository {
   }
 
   @override
-  Future<ElementModel> getHomeContent() async {
+  Future<HomeModel> getHomeContent() async {
     try {
       final result = await dataSource.getHomeContent();
-      return ElementAdapter.fromMap(result);
+      return HomeAdapter.fromMap(result[0]);
     } catch (e) {
       throw Exception(e.toString());
     }
