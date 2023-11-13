@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ExpandedCardWidget extends StatefulWidget {
   final IconData leadingIcon;
   final String title;
-  final List<Widget> children;
+  final Widget children;
   const ExpandedCardWidget(
       {super.key,
       required this.leadingIcon,
@@ -22,6 +22,7 @@ class _ExpandedCardWidgetState extends State<ExpandedCardWidget> {
       child: Container(
         color: Colors.black26,
         child: ExpansionTile(
+            collapsedIconColor: Colors.white,
             leading: Icon(widget.leadingIcon),
             backgroundColor: Colors.black,
             title: Text(
@@ -30,8 +31,13 @@ class _ExpandedCardWidgetState extends State<ExpandedCardWidget> {
                   .textTheme
                   .titleMedium!
                   .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
-            children: widget.children),
+            children: [
+              Expanded(
+                child: widget.children,
+              )
+            ]),
       ),
     );
   }
